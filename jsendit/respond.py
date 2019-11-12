@@ -11,7 +11,7 @@ consistently using the `JSend <https://labs.omniti.com/labs/jsend>`_
 specification.
 """
 from enum import Enum
-from typing import Dict
+from typing import Any, Mapping
 
 
 class JSendStatus(Enum):
@@ -44,7 +44,7 @@ class JSendStatus(Enum):
 def response(
         status: JSendStatus or int,
         message: str = None,
-        data: Dict = None):
+        data: Mapping[str, Any] = None):
     """
     Construct a `JSend <https://labs.omniti.com/labs/jsend>`_ response message.
 
@@ -63,5 +63,5 @@ def response(
         k: v for k, v in {
             'message': message,
             **(data if data is not None else {})
-        }.items() if v
+        }.items() if v is not None
     }, _code
